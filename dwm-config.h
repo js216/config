@@ -1,0 +1,1 @@
+/home/jk/.dwm-6.0/config.h
