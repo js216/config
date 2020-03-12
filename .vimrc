@@ -13,9 +13,9 @@ set hidden
 set splitbelow
 set splitright
 set expandtab
-set textwidth=80
-set nospell
 
+set textwidth=0
+set wrapmargin=0
 let fortran_free_source=1
 
 noremap k gk
