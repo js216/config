@@ -13,7 +13,7 @@ set hidden
 set splitbelow
 set splitright
 set expandtab
-
+set display+=lastline
 set textwidth=0
 set wrapmargin=0
 let fortran_free_source=1
