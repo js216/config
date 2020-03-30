@@ -1,0 +1,9 @@
+[Unit]
+Description=last.fm updater for MPD
+After=mpd.service
+
+[Service]
+ExecStart=/home/jk/.prog/mpd-ratings/mpd_logger.sh
+
+[Install]
+WantedBy=default.target
