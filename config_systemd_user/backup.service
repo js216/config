@@ -1,5 +1,0 @@
-[Unit]
-Description=Run daily backup
-
-[Service]
-ExecStart=/home/jk/.prog/backup.sh
