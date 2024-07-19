@@ -2,7 +2,7 @@
 # TAR INVOKED SCRIPT
 
 # get volume number
-n=$(</tmp/backup-number)
+n=$(</tmp/backup/number)
 
 if [ -z "${TAR_ARCHIVE}" ]
 then
@@ -10,20 +10,20 @@ then
 fi
 
 # move file to temp
-mv $TAR_ARCHIVE /tmp/backup.tar
+mv $TAR_ARCHIVE /tmp/backup/backup.tar
 
 # compress
-gzip /tmp/backup.tar
+gzip /tmp/backup/backup.tar
 
 # encrypt
-gpg -c --cipher-algo AES --batch --output /tmp/backup.tar.gz.gpg \
-   --passphrase "radar jelly trustful sherry" /tmp/backup.tar.gz
+gpg -c --cipher-algo AES --batch --output /tmp/backup/backup.tar.gz.gpg \
+   --passphrase "radar jelly trustful sherry" /tmp/backup/backup.tar.gz
 
 # remove temporary file
-rm /tmp/backup.tar.gz
+rm /tmp/backup/backup.tar.gz
 
 # move to flash drive
-mv /tmp/backup.tar.gz.gpg /media/$TAR_ARCHIVE/home-backup/$n.tar.gz.gpg
+mv /tmp/backup/backup.tar.gz.gpg /media/$TAR_ARCHIVE/home-backup/$n.tar.gz.gpg
 
 # increment volume number
-echo $((n+1)) >/tmp/backup-number
+echo $((n+1)) >/tmp/backup/number
