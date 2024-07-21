@@ -117,8 +117,9 @@ function! MathAndLiquid()
     hi link math_block Boolean
 endfunction
 
-" Call everytime we open a Markdown file
+" Markdown options
 autocmd BufRead,BufNewFile,BufEnter *.md,*.markdown call MathAndLiquid()
+autocmd BufRead,BufNewFile,BufEnter *.md,*.markdown set spell
 
 " Automatically highlight Kconfig files
 au BufNewFile,BufRead Kconfig,Kconfig.debug,*.in setf kconfig

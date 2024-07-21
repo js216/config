@@ -1,25 +1,42 @@
 #!/bin/sh
+#
+# ~/.xinitrc
+#
 
-# set monitors
-xrandr --output DVI-1-0 --auto
-xrandr --output HDMI-1-1 --auto
-xrandr --output DVI-1-0 -left-of DVI-0
-xrandr --output HDMI-0 --right-of DVI-0
-xrandr --output VGA-0 --left-of DVI-1-0
-xrandr --output HDMI-1-1 --right-of HDMI-0
-xrandr --output HDMI-1-1 --pos 6500x0
-xrandr --output HDMI-0 --pos 4880x0
-xrandr --output DVI-0 --pos 2960x0
+# set desktop background
+/usr/bin/feh --bg-fill /home/jk/.bg.jpg
 
-# set background image
-feh --bg-scale ~/.background.jpg
-
-# map caps to esc
-setxkbmap -option caps:escape
-
-# status bar info
+# status bar for dwm
 while true; do
-   xsetroot -name "$( free | awk 'FNR == 2 {printf "%.0f%%",$3/$2*100}') $(cat /proc/loadavg|awk '{print $1" "$2" "$3" |"}'|sed 's/,//') $( sensors|grep "Core 0"|awk '{print $3}' ) $( sensors|grep "Core 1"|awk '{print $3}' ) $( sensors|grep "Core 2"|awk '{print $3}' ) $( sensors|grep "Core 3"|awk '{print $3}' ) $( sensors|grep "Core 4"|awk '{print $3}' ) $( sensors|grep "Core 5"|awk '{print $3" |"}' ) $( date +"%a %F %R" )" && sleep 30s
+   xsetroot -name "\
+       $( acpi -V|head -n 1|awk '{print $4" "$5}'|sed 's/,//' ) $( free | awk 'FNR == 2 {printf "%.0f%%",$3/$2*100}') $(cat /proc/loadavg|awk '{print $2}'|sed 's/,//') $( date +"%a %F %R" )" && sleep 10s
+   xkbset m
 done &
 
-exec dwm
+# start the notification daemon
+/usr/bin/dunst -config ~/.dunstrc &
+
+# check for google calendar notifications
+if [ -x /usr/bin/gcalcli ]; then
+   while true; do
+      /usr/bin/gcalcli remind
+      sleep 300
+   done &
+fi
+
+# remap some keyboard keys
+xkbset m
+xmodmap -e "keycode 9 = Caps_Lock"
+xmodmap -e 'clear Lock' -e 'keycode 66 = Escape'
+xmodmap -e "keycode 108 = Pointer_Button1"
+xmodmap -e "keycode 135 = Pointer_Button2"
+xmodmap -e "keycode 105 = Pointer_Button3"
+
+# to make arduino work
+_JAVA_AWT_WM_NONREPARENTING=1
+export _JAVA_AWT_WM_NONREPARENTING
+
+# conky for status display
+/usr/bin/conky &
+
+exec /usr/local/bin/dwm
