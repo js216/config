@@ -1,6 +1,6 @@
 set -o vi
 export EDITOR=vim
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/home/jk/.local/bin"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/home/jk/.local/bin:/usr/local/go/bin"
 export GOPATH=$HOME/.local/go
 bind -x '"\C-l": clear'
 
@@ -110,6 +110,7 @@ TarBackup() {
     # run tar create
     cd ~
     time tar c -L 512M -F ~/.prog/tar_compress.sh -f $1 \
+       --exclude=*.swp \
        --exclude=$1 \
        --exclude=temp \
        --exclude=music \
@@ -118,6 +119,7 @@ TarBackup() {
        --exclude=.config \
        --exclude=.mpd \
        --exclude=.downloads \
+       --exclude=.uml \
        --exclude=.local \
        -C/ \
        home/jk
