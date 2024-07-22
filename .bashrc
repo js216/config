@@ -24,6 +24,7 @@ alias du="du -B1"
 
 # abbreviating aliases
 alias ac="apt-cache search"
+alias as="apt-cache show"
 alias aget="sudo apt install"
 alias RadioSuisse="mplayer http://stream.srg-ssr.ch/m/rsc_fr/mp3_128"
 alias ognjisce="mplayer -ao jack http://real.ognjisce.si:8000/ognjisce.mp3"

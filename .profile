@@ -16,11 +16,7 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
-
-#export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/home/jk/.local/bin:/usr/local/go/bin"
-#export PATH=$PATH:/usr/local/go/bin
-#export GOPATH=$HOME/.local/go
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+export PATH=$PATH:/home/jk/.local/bin:/usr/local/go/bin
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/.local/go

@@ -17,7 +17,7 @@ gzip /tmp/backup/backup.tar
 
 # encrypt
 gpg -c --cipher-algo AES --batch --output /tmp/backup/backup.tar.gz.gpg \
-   --passphrase "radar jelly trustful sherry" /tmp/backup/backup.tar.gz
+   --passphrase "$(< backup_passwd.txt)" /tmp/backup/backup.tar.gz
 
 # remove temporary file
 rm /tmp/backup/backup.tar.gz
