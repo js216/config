@@ -16,14 +16,6 @@ done &
 # start the notification daemon
 /usr/bin/dunst -config ~/.dunstrc &
 
-# check for google calendar notifications
-if [ -x /usr/bin/gcalcli ]; then
-   while true; do
-      /usr/bin/gcalcli remind
-      sleep 300
-   done &
-fi
-
 # remap some keyboard keys
 xkbset m
 xmodmap -e "keycode 9 = Caps_Lock"

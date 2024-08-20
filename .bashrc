@@ -21,6 +21,7 @@ alias less="less -R"
 alias feh="feh --scale-down"
 alias agg="ag -C 5 --pager='less -R'"
 alias du="du -B1"
+alias vi="busybox vi"
 
 # abbreviating aliases
 alias ac="apt-cache search"

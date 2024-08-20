@@ -50,7 +50,7 @@ TarBackup() {
 
     # run tar create
     cd ~
-    time tar c -L 512M -F ~/.prog/tar_compress.sh -f $1 \
+    time tar cv -L 512M -F ~/.prog/tar_compress.sh -f $1 \
        --exclude=*.swp \
        --exclude=$1 \
        --exclude=temp \
@@ -63,7 +63,8 @@ TarBackup() {
        --exclude=.uml \
        --exclude=.local \
        -C/ \
-       home/jk
+       home/jk 2>&1 > /tmp/backup_files.txt | \
+       grep -v ": file name too long to be stored in a GNU multivolume header"
 
     # execute the "change-volume" script a last time
     ~/.prog/tar_compress.sh $1
@@ -74,8 +75,15 @@ TarBackup() {
 }
 
 TarCompare() {
+    # check the target directory exists
+    if [ ! -d "/media/$1/home-backup" ] 
+    then
+        >&2 echo "ERROR: Directory /media/$1/home-backup does not exists."
+        return -1
+    fi
+
     # check there are no previous temporary files left over (indicing errors)
-    if [[ -d /tmp/backup.tar ]] 
+    if [[ -d /tmp/backup ]] 
     then
         >&2 echo "ERROR: Temporary files left over."
         return -1

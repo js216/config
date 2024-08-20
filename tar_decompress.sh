@@ -19,7 +19,7 @@ cp /media/$TAR_ARCHIVE/home-backup/$n.tar.gz.gpg /tmp/backup/$n.tar.gz.gpg
 
 # decrypt
 gpg -d --quiet --batch --output /tmp/backup/$n.tar.gz \
-   --passphrase "$(< backup_passwd.txt)" /tmp/backup/$n.tar.gz.gpg
+   --passphrase "$(< ~/.prog/backup_passwd.txt)" /tmp/backup/$n.tar.gz.gpg
 
 # remove temporary file
 rm /tmp/backup/$n.tar.gz.gpg

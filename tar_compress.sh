@@ -4,6 +4,7 @@
 # get volume number
 n=$(</tmp/backup/number)
 
+# if TAR_ARCHIVE undefined, take it from cmdline arg
 if [ -z "${TAR_ARCHIVE}" ]
 then
    TAR_ARCHIVE=$1
@@ -17,7 +18,7 @@ gzip /tmp/backup/backup.tar
 
 # encrypt
 gpg -c --cipher-algo AES --batch --output /tmp/backup/backup.tar.gz.gpg \
-   --passphrase "$(< backup_passwd.txt)" /tmp/backup/backup.tar.gz
+   --passphrase "$(< ~/.prog/backup_passwd.txt)" /tmp/backup/backup.tar.gz
 
 # remove temporary file
 rm /tmp/backup/backup.tar.gz
