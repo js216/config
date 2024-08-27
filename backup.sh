@@ -63,7 +63,7 @@ TarBackup() {
        --exclude=.uml \
        --exclude=.local \
        -C/ \
-       home/jk 2>&1 > /tmp/backup_files.txt | \
+       home/jk 2>&1 > /tmp/backup.txt | \
        grep -v ": file name too long to be stored in a GNU multivolume header"
 
     # execute the "change-volume" script a last time
@@ -98,7 +98,9 @@ TarCompare() {
     touch $1
 
     # run tar diff
-    time tar dv -F ~/.prog/tar_decompress.sh -f $1 -C/
+    time tar dv -F ~/.prog/tar_decompress.sh -f $1 -C/ \
+       2>&1 > /tmp/compare.txt | \
+       grep -v "is possibly continued on this volume: header contains truncated name"
 
     # remove temp files
     rm $1
