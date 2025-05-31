@@ -66,6 +66,11 @@ command Wall wall
 nnoremap _ :Hexplore<CR>
 nnoremap + :Explore<CR>
 
+" Copy to clipboard
+nnoremap Y "+y
+vnoremap Y "+y
+onoremap Y y
+
 " Leader commands
 let mapleader = " "
 map <leader><Space> :noh<CR>
@@ -133,8 +138,6 @@ endfunction
 set tabline=%!Tabline()
 highlight TabLine ctermbg=lightgrey ctermfg=black
 highlight TabLineSel ctermbg=blue
-
-
 
 " LaTeX in Markdown
 function! MathAndLiquid()
