@@ -67,9 +67,9 @@ nnoremap _ :Hexplore<CR>
 nnoremap + :Explore<CR>
 
 " Copy to clipboard
-nnoremap Y "+y
-vnoremap Y "+y
-onoremap Y y
+noremap Y "+y
+"vnoremap Y "+y
+"onoremap Y y
 
 " Leader commands
 let mapleader = " "
