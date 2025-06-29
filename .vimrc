@@ -91,6 +91,8 @@ map <leader>8 <Esc>:tabn 8<CR>
 map <leader>9 <Esc>:tablast<CR>
 map <leader>n <Esc>:tabn<CR>
 map <leader>p <Esc>:tabp<CR>
+map <leader>d <Esc>:bd<CR>
+map <leader>q <Esc>:q<CR>
 
 " Function keys
 map <F1> <Esc>:tabp<CR>
