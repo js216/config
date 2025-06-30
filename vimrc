@@ -44,7 +44,7 @@ set timeoutlen=500
 set hidden
 set splitbelow
 set splitright
-set expandtab
+set noexpandtab
 set visualbell
 set belloff=all
 set autochdir

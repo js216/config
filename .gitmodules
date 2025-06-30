@@ -1,3 +1,0 @@
-[submodule "config"]
-	path = work_config
-	url = git@github.com:js214/config.git
