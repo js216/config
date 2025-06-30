@@ -5,33 +5,10 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'mileszs/ack.vim'
+call vundle#end()
 filetype plugin indent on
 let g:ackprg = 'ag --nogroup --nocolor --column'
-let g:ack_autoclose = 1
-
-" Appearance
-syntax on
-colorscheme torte
-let g:netrw_banner = 0
-
-" Line wrapping
-set formatoptions+=t "auto-wrap using textwidth
-set textwidth=80
-autocmd FileType * set formatoptions+=t
-set nowrap
-autocmd BufEnter * highlight OverLength ctermbg=blue guibg=#111111
-autocmd BufEnter * match OverLength /\%82v.*/
-
-" Visible tabs and trailing spaces
-highlight WhitespaceEOL ctermbg=red guibg=red
-autocmd FileType * match WhitespaceEOL /\s\+$/
-set list listchars=tab:\|-
-
-" Undo options
-set undofile
-set undodir=$HOME/.vim/undo
-set undolevels=10000
-set undoreload=100000
+let g:ack_autoclose = 0
 
 " Misc options
 set number
@@ -44,7 +21,7 @@ set timeoutlen=500
 set hidden
 set splitbelow
 set splitright
-set noexpandtab
+set expandtab
 set visualbell
 set belloff=all
 set autochdir
@@ -53,6 +30,14 @@ set showcmd
 set ruler
 set laststatus=1
 set hlsearch
+set mouse=nvi
+set formatoptions+=t
+set textwidth=80
+set nowrap
+set undofile
+set undodir=$HOME/.vim/undo
+set undolevels=10000
+set undoreload=100000
 
 " Misc Mappings
 noremap k gk
@@ -63,13 +48,11 @@ noremap <C-P> <C-B>
 noremap <Tab> :bn<CR>
 noremap <S-Tab> :bp<CR>
 command Wall wall
-nnoremap _ :Hexplore<CR>
-nnoremap + :Explore<CR>
-
-" Copy to clipboard
-noremap Y "+y
-"vnoremap Y "+y
-"onoremap Y y
+map _ :Hexplore<CR>
+map + :Explore<CR>
+map \ :Texplore<CR>
+map <BS> :vsplit<CR>:Explore<CR>
+map Y "+y
 
 " Leader commands
 let mapleader = " "
@@ -78,6 +61,7 @@ map <leader>h <C-w>h
 map <leader>l <C-w>l
 map <leader>k <C-w>k
 map <leader>j <C-w>j
+map <leader>c :cd ..<CR>:pw<CR>
 map <leader>f :Ack!<space>
 map <leader>g :let @/=expand("<cword>")<Bar>wincmd w<Bar>normal n<CR>
 map <leader>1 <Esc>:tabn 1<CR>
@@ -97,10 +81,36 @@ map <leader>q <Esc>:q<CR>
 " Function keys
 map <F1> <Esc>:tabp<CR>
 map <F2> <Esc>:tabn<CR>
-map <F3> <Nop>
-map <F4> <Nop>
+map <F3> <Esc>:windo diffthis<CR>
+map <F4> <Esc>:windo diffoff<CR>
 noremap <F5> @a
-inoremap <F12> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
+noremap <F8> <Esc>:%!shuf<CR>
+inoremap <F8> TODO: remove this
+noremap <F12> A // JK edit <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
+inoremap <F12> <C-R>=strftime("%m/%d/%Y")<CR>
+noremap <F10> <Esc>:split sent.txt<CR>
+
+" Files based on filename
+au BufNewFile,BufRead Kconfig,Kconfig.debug,*.in setf kconfig
+au BufRead,BufNewFile *.jlinkscript set filetype=c
+
+" Open file read-only if it already has a swapfile
+autocmd SwapExists * let v:swapchoice = "o"
+
+" New commands
+command LinuxStyle :set autoindent noexpandtab tabstop=8 shiftwidth=8
+
+" Appearance
+syntax on
+colorscheme torte
+let g:netrw_banner = 0
+
+" Visible tabs and trailing spaces
+set list listchars=tab:\|-
+highlight WhitespaceEOL ctermbg=red guibg=red
+autocmd FileType * match WhitespaceEOL /\s\+$/
+autocmd BufEnter * highlight OverLength ctermbg=blue guibg=#111111
+autocmd BufEnter * match OverLength /\%82v.*/
 
 " Tab line formatter function
 function! Tabline() abort
@@ -126,6 +136,8 @@ function! Tabline() abort
             break
          endif
       endfor
+      " Prefix tab number
+      let l:label = printf('%d: %s', l:i, l:label)
       " Assemble tab line from tab labels
       let l:line .= '%' .  i .  'T' " Starts mouse click target region.
       let l:line .= ' ' .  l:label .  ' '
@@ -138,39 +150,11 @@ endfunction
 
 " Format tab line
 set tabline=%!Tabline()
+highlight TabLine cterm=none
 highlight TabLine ctermbg=lightgrey ctermfg=black
 highlight TabLineSel ctermbg=blue
 
-" LaTeX in Markdown
-function! MathAndLiquid()
-    "" Define certain regions
-    " Block math. Look for "$$[anything]$$"
-    syn region math start=/\$\$/ end=/\$\$/
-    " inline math. Look for "$[not $][anything]$"
-    syn match math_block '\$[^$].\{-}\$'
-
-    " Liquid single line. Look for "{%[anything]%}"
-    syn match liquid '{%.*%}'
-    " Liquid multiline. Look for "{%[anything]%}[anything]{%[anything]%}"
-    syn region highlight_block start='{% highlight .*%}' end='{%.*%}'
-    " Fenced code blocks, used in GitHub Flavored Markdown (GFM)
-    syn region highlight_block start='```' end='```'
-
-    "" Actually highlight those regions.
-"    hi link math Statement
-"    hi link liquid Statement
-"    hi link highlight_block Function
-    hi link math_block Boolean
-endfunction
-
-" Call everytime we open a Markdown file
-autocmd BufRead,BufNewFile,BufEnter *.md,*.markdown call MathAndLiquid()
-autocmd BufRead,BufNewFile,BufEnter *.md,*.markdown set spell
-
-" Automatically highlight Kconfig files
-au BufNewFile,BufRead Kconfig,Kconfig.debug,*.in setf kconfig
-
-"https://stackoverflow.com/questions/20979403/how-to-add-total-line-count-of-file-to-vim-status-bar
+" Show total line count of file in status bar
 set statusline =%1*\ %n\ %*     "buffer number
 set statusline +=%5*%{&ff}%*    "file format
 set statusline +=%3*%y%*        "file type
@@ -188,3 +172,26 @@ hi User2 ctermfg=black ctermbg=cyan
 hi User3 ctermfg=black ctermbg=cyan
 hi User4 ctermfg=black ctermbg=cyan
 hi User5 ctermfg=black ctermbg=cyan
+
+" Colors for statusline (GUI mode)
+hi User1 guifg=#eea040 guibg=#444444
+hi User2 guifg=#dd3333 guibg=#444444
+hi User3 guifg=#ff66ff guibg=#444444
+hi User4 guifg=#a0ee40 guibg=#444444
+hi User5 guifg=#eeee40 guibg=#444444
+
+" Gui options
+set guioptions-=e  "tabline matches overall colorscheme
+set guioptions-=m  "remove menu bar
+set guioptions-=T  "remove toolbar
+set guioptions-=r  "remove right-hand scroll bar
+set guioptions-=L  "remove left-hand scroll bar
+set guitablabel=%N:%M%t "tabs display filename, not complete path
+set guifont=Consolas:h10.8:cANSI
+au GUIEnter * simalt ~x
+
+" Set block cursor
+let &t_ti.="\e[1 q"
+let &t_SI.="\e[5 q"
+let &t_EI.="\e[1 q"
+let &t_te.="\e[0 q"
