@@ -1,0 +1,9 @@
+def_key "j"
+    scroll_down
+def_key "k"
+    scroll_up
+
+def_key "n"
+    next_found_item
+def_key "N"
+    previous_found_item

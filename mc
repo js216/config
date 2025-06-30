@@ -1,1 +1,0 @@
-/home/jk/.config/mc
