@@ -1,0 +1,5 @@
+*faceName: Dejavu Sans Mono:size=10
+*boldFont: Dejavu Sans Mono:style=Bold:size=10
+*background:    #000000
+*foreground:    #bbbb99
+XTerm*eightBitInput: false

@@ -28,10 +28,13 @@ alias ac="apt-cache search"
 alias as="apt-cache show"
 alias aget="sudo apt install"
 alias cal="ncal -b3"
+alias dc="dc -f ~/.dcinit -"
 alias RadioSuisse="mplayer http://stream.srg-ssr.ch/m/rsc_fr/mp3_128"
 alias ognjisce="mplayer -ao jack http://real.ognjisce.si:8000/ognjisce.mp3"
 alias AllDayCalEvent="gcalcli add --allday --where '' --duration 1 --description ''"
 alias Record="pw-record - | lame -r -s 48 - $(date +%d%b%y).mp3"
+alias Kindle="jmtpfs /media/kindle && mc ~/books/kindle /media/kindle/Internal\ Storage/documents"
+alias UnKindle="sync && fusermount -u /media/kindle"
 
 function g() {
    w3m -no-cookie "http://www.google.com/search?q=$(echo $@ | sed 's/ /+/g' )"
