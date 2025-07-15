@@ -99,6 +99,7 @@ autocmd SwapExists * let v:swapchoice = "o"
 
 " New commands
 command LinuxStyle :set autoindent noexpandtab tabstop=8 shiftwidth=8
+command! E execute 'let v=winsaveview() | edit | call winrestview(v)'
 
 " Appearance
 syntax on
@@ -111,6 +112,9 @@ highlight WhitespaceEOL ctermbg=red guibg=red
 autocmd FileType * match WhitespaceEOL /\s\+$/
 autocmd BufEnter * highlight OverLength ctermbg=blue guibg=#111111
 autocmd BufEnter * match OverLength /\%82v.*/
+
+" Custom syntax
+autocmd BufNewFile,BufRead *.nw set syntax=noweb
 
 " Tab line formatter function
 function! Tabline() abort
