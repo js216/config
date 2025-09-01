@@ -22,10 +22,10 @@ alias feh="feh --scale-down"
 alias agg="ag -C 5 --pager='less -R'"
 alias du="du -B1"
 alias vi="busybox vi"
+alias info="info --vi-keys"
 
 # abbreviating aliases
 alias ac="apt-cache search"
-alias as="apt-cache show"
 alias aget="sudo apt install"
 alias cal="ncal -b3"
 alias dc="dc -f ~/.dcinit -"
@@ -43,3 +43,17 @@ function g() {
 function pdf-extract() {
    gs -sDEVICE=pdfwrite -dNOPAUSE -dBATCH -dSAFER -dFirstPage=$3 -dLastPage=$4 -sOutputFile=$2 $1
 } # usage: pdf-extract input.pdf output.pdf <firstPage> <lastPage>
+
+function Bells()
+{
+   while true
+   do
+      timeout $1 cat
+      timeout 0.5 speaker-test -t sine -f 400 -l 1 -p 1 2&> /dev/null
+      timeout $2 cat
+      timeout 0.5 speaker-test -t sine -f 600 -l 1 -p 1 2&> /dev/null
+      timeout $3 cat
+      timeout 0.5 speaker-test -t sine -f 800 -l 1 -p 1 2&> /dev/null
+   done
+}
+. "$HOME/.cargo/env"
