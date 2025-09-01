@@ -11,6 +11,9 @@ col_to_letters() {
     echo "$result"
 }
 
+# move up
+echo up
+
 # get the column of current cell and convert to letter (0 -> A, ...)
 echo eval @mycol
 read COL
@@ -20,14 +23,15 @@ COL_LETTER=$(col_to_letters "$COL")
 echo eval @myrow
 read ROW
 
-# get value of current cell
-echo getnum
-read VAL
+# copy trick: erase and pull
+echo erase $COL_LETTER$ROW
+echo pull
 
-# return the negated value
-if [[ $VAL =~ [0-9] ]]; then
-   echo let $COL_LETTER$ROW = -$VAL
-fi
+# come back down
+echo down
+
+# pull the value here also
+echo pull
 
 # move cursor once cell right
 echo mright

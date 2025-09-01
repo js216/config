@@ -1,1 +1,8 @@
 format 5 = "%m/%d/%y"
+
+fkey 1 = "endleft"
+fkey 2 = "enddown"
+fkey 3 = "endup"
+fkey 4 = "endright"
+fkey 11 = "merge \"|~/projects/config/scmacros/copy_above.sh\""
+fkey 12 = "merge \"|~/projects/config/scmacros/negate.sh\""
