@@ -24,7 +24,13 @@ gpg -c --cipher-algo AES --batch --output /tmp/backup/backup.tar.gz.gpg \
 rm /tmp/backup/backup.tar.gz
 
 # move to flash drive
-mv /tmp/backup/backup.tar.gz.gpg /media/$TAR_ARCHIVE/home-backup/$n.tar.gz.gpg
+mv /tmp/backup/backup.tar.gz.gpg \
+   /media/$TAR_BACKUP_DRIVE/$TAR_BACKUP_SUBDIR/$n.tar.gz.gpg
+
+# append SHA256 checksum to central file
+cd /media/$TAR_BACKUP_DRIVE/$TAR_BACKUP_SUBDIR
+sha256sum $n.tar.gz.gpg >> volumes.sha256
+cd -
 
 # increment volume number
 echo $((n+1)) >/tmp/backup/number

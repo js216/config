@@ -1,16 +1,19 @@
 Backup() {
+    # Choose a subdirectory
+    subdir="${2:-home-backup}"
+
     # check the target directory exists
-    if [ ! -d "/media/$1/home-backup" ] 
+    if [ ! -d "/media/$1/$subdir" ] 
     then
-        echo "ERROR: Directory /media/$1/home-backup does not exists."
+        echo "ERROR: Directory /media/$1/$subdir does not exists."
         return -1
     fi
 
     # determine mode of operation
-    if [[ $2 = "copy" ]]
+    if [[ $subdir = "copy" ]]
     then
         flags="-avhc --delete"
-    elif [[ $2 = "test" ]]
+    elif [[ $subdir = "test" ]]
     then
         flags="-avhcn --delete"
     else
@@ -21,19 +24,17 @@ Backup() {
     # copy or verify the files
     time rsync $flags \
         --exclude=/music \
-        --exclude=/movies \
-        --exclude=/.cache \
-        --exclude=/.config \
-        --exclude=/.downloads \
-        --exclude=/.local \
-        /home/jk/ /media/$1/home-backup > backup-$1.log
+        /home/jk/ /media/$1/$subdir > backup-$1.log
 }
 
 TarBackup() {
+    # Choose a subdirectory
+    subdir="${2:-home-backup}"
+
     # check the target directory exists
-    if [ ! -d "/media/$1/home-backup" ] 
+    if [ ! -d "/media/$1/$subdir" ] 
     then
-        >&2 echo "ERROR: Directory /media/$1/home-backup does not exists."
+        >&2 echo "ERROR: Directory /media/$1/$subdir does not exists."
         return -1
     fi
 
@@ -50,9 +51,10 @@ TarBackup() {
 
     # run tar create
     cd ~
-    time tar cv -L 512M -F ~/.prog/tar_compress.sh -f $1 \
+    export TAR_BACKUP_DRIVE="$1"
+    export TAR_BACKUP_SUBDIR="$2"
+    time tar cv -L 512M -F ~/.prog/tar_compress.sh -f /tmp/backup/$1 \
        --exclude=*.swp \
-       --exclude=$1 \
        --exclude=temp \
        --exclude=music \
        --exclude=movies \
@@ -63,22 +65,26 @@ TarBackup() {
        --exclude=.uml \
        --exclude=.local \
        -C/ \
-       home/jk 2>&1 > /tmp/backup.txt | \
+       home/jk 2>&1 > /tmp/backup/backup.txt | \
        grep -v ": file name too long to be stored in a GNU multivolume header"
 
     # execute the "change-volume" script a last time
-    ~/.prog/tar_compress.sh $1
+    ~/.prog/tar_compress.sh /tmp/backup/$1
 
     # remove temp files
     rm /tmp/backup/number
+    rm /tmp/backup/backup.txt
     rm -d /tmp/backup
 }
 
 TarCompare() {
+    # Choose a subdirectory
+    subdir="${2:-home-backup}"
+
     # check the target directory exists
-    if [ ! -d "/media/$1/home-backup" ] 
+    if [ ! -d "/media/$1/$subdir" ] 
     then
-        >&2 echo "ERROR: Directory /media/$1/home-backup does not exists."
+        >&2 echo "ERROR: Directory /media/$1/$subdir does not exists."
         return -1
     fi
 
@@ -93,17 +99,21 @@ TarCompare() {
     mkdir /tmp/backup
     echo 1 >/tmp/backup/number
 
+    # clear previous output
+    > ~/temp/backup_files.txt
+
     # setup temp files
     cd ~
-    touch $1
+    touch /tmp/backup/$1
 
     # run tar diff
-    time tar dv -F ~/.prog/tar_decompress.sh -f $1 -C/ \
+    export TAR_BACKUP_DRIVE="$1"
+    export TAR_BACKUP_SUBDIR="$2"
+    time tar dv  --ignore-zeros -F ~/.prog/tar_decompress.sh -f /tmp/backup/$1 -C/ \
        2>&1 > /tmp/compare.txt | \
        grep -v "is possibly continued on this volume: header contains truncated name"
 
     # remove temp files
-    rm $1
     rm /tmp/backup/number
     rm -d /tmp/backup
 }
@@ -129,5 +139,5 @@ MusicBackup() {
     fi
 
     # copy or verify the files
-    time rsync $flags /home/jk/music/ /media/$1/music > musicbackup-$1.log
+    time rsync $flags /home/jk/music/ /media/$1/music > temp/musicbackup-$1.log
 }

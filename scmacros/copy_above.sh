@@ -11,6 +11,9 @@ col_to_letters() {
     echo "$result"
 }
 
+# move right
+echo mright
+
 # move up
 echo up
 

@@ -35,6 +35,9 @@ alias AllDayCalEvent="gcalcli add --allday --where '' --duration 1 --description
 alias Record="pw-record - | lame -r -s 48 - $(date +%d%b%y).mp3"
 alias Kindle="jmtpfs /media/kindle && mc ~/books/kindle /media/kindle/Internal\ Storage/documents"
 alias UnKindle="sync && fusermount -u /media/kindle"
+alias ShaMake="find . -type f -print0 | xargs -0 sha256sum"
+alias Tor="cd ~/.prog/tor-browser && ./start-tor-browser.desktop"
+alias ll="ls -lht"
 
 function g() {
    w3m -no-cookie "http://www.google.com/search?q=$(echo $@ | sed 's/ /+/g' )"
@@ -56,4 +59,3 @@ function Bells()
       timeout 0.5 speaker-test -t sine -f 800 -l 1 -p 1 2&> /dev/null
    done
 }
-. "$HOME/.cargo/env"
