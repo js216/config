@@ -52,7 +52,7 @@ static const Layout layouts[] = {
 /* commands */
 static const char *dmenucmd[]      = { "rofi", "-show", "run", NULL };
 static const char *termcmd[]       = { "xterm", NULL };
-static const char *filescmd[]      = { "pcmanfm-qt", NULL };
+static const char *filescmd[]      = { "spacefm", NULL };
 static const char *xkillcmd[]      = { "xkill", NULL };
 static const char *editcmd[]       = { "mousepad", NULL };
 static const char *slovene[]       = { "/home/jk/.prog/keyboard.sh", "si", NULL };

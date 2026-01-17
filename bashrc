@@ -38,6 +38,10 @@ alias UnKindle="sync && fusermount -u /media/kindle"
 alias ShaMake="find . -type f -print0 | xargs -0 sha256sum"
 alias Tor="cd ~/.prog/tor-browser && ./start-tor-browser.desktop"
 alias ll="ls -lht"
+alias Foam="source ~/.prog/foam/OpenFOAM-dev/etc/bashrc"
+alias ga="git add . && git status"
+alias gc="git commit"
+alias gs="git status"
 
 function g() {
    w3m -no-cookie "http://www.google.com/search?q=$(echo $@ | sed 's/ /+/g' )"
@@ -59,3 +63,5 @@ function Bells()
       timeout 0.5 speaker-test -t sine -f 800 -l 1 -p 1 2&> /dev/null
    done
 }
+
+export PATH=/opt/llvm-21/bin:$PATH

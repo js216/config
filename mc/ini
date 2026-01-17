@@ -122,6 +122,8 @@ color_terminals=
 
 tmux-256color=
 
+xterm=
+
 [Panels]
 show_mini_info=true
 kilobyte_si=false

@@ -16,8 +16,8 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
-export PATH=$PATH:/home/jk/.local/bin:/usr/local/go/bin
-export PATH=$PATH:/usr/local/go/bin
-export GOPATH=$HOME/.local/go
-. "$HOME/.cargo/env"
+#export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+#export PATH=$PATH:/home/jk/.local/bin:/usr/local/go/bin
+#export PATH=$PATH:/usr/local/go/bin
+#export GOPATH=$HOME/.local/go
+#. "$HOME/.cargo/env"
