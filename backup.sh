@@ -59,6 +59,7 @@ TarBackup() {
        --exclude=music \
        --exclude=movies \
        --exclude=.cache \
+       --exclude=.cargo \
        --exclude=.config \
        --exclude=.mpd \
        --exclude=.downloads \
