@@ -10,5 +10,5 @@ ln -i Xdefaults  ~/.Xdefaults
 ln -i xinitrc    ~/.xinitrc
 
 cp -ri mc ~/.config
-cp -ri ncmpcpp ~
-cp -ri vim ~
+cp -ri ncmpcpp ~/.ncmpcpp
+cp -ri vim ~/.vim

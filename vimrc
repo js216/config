@@ -103,7 +103,7 @@ command! E execute 'let v=winsaveview() | edit | call winrestview(v)'
 
 " Appearance
 syntax on
-colorscheme torte
+colorscheme evening
 let g:netrw_banner = 0
 
 " Visible tabs and trailing spaces
