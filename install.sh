@@ -8,6 +8,7 @@ ln -i tmux.conf     ~/.tmux.conf
 ln -i vimrc         ~/.vimrc
 ln -i Xdefaults     ~/.Xdefaults
 ln -i xinitrc       ~/.xinitrc
+ln -i muttrc        ~/.muttrc
 
 cp -ri mc ~/.config
 cp -ri ncmpcpp ~/.ncmpcpp

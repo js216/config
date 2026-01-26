@@ -9,6 +9,8 @@ pulseaudio-utils
 alsa-utils
 dc
 silversearcher-ag
+psmisc
+mutt
 
 xorg
 chromium
@@ -23,3 +25,4 @@ rofi
 xkbset
 doublecmd-qt
 zathura
+default-jre
