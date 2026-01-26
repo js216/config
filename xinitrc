@@ -4,7 +4,7 @@
 #
 
 # set desktop background
-/usr/bin/feh --bg-fill /home/jk/.bg.jpg
+/usr/bin/feh --bg-fill /home/jk/slike/1418047280-bg.jpg
 
 # status bar for dwm
 while true; do
@@ -12,9 +12,6 @@ while true; do
        $( acpi -V|head -n 1|awk '{print $4" "$5}'|sed 's/,//' ) $( free | awk 'FNR == 2 {printf "%.0f%%",$3/$2*100}') $(cat /proc/loadavg|awk '{print $2}'|sed 's/,//') $( date +"%a %F %R" )" && sleep 10s
    xkbset m
 done &
-
-# start the notification daemon
-/usr/bin/dunst -config ~/.dunstrc &
 
 # remap some keyboard keys
 xkbset m
