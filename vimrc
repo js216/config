@@ -36,6 +36,8 @@ set textwidth=80
 set nowrap
 set undofile
 set undodir=$HOME/.vim/undo
+set backupdir=~/.vimtmp//,.
+set directory=~/.vimtmp//,.
 set undolevels=10000
 set undoreload=100000
 
@@ -52,7 +54,6 @@ map _ :Hexplore<CR>
 map + :Explore<CR>
 map \ :Texplore<CR>
 map <BS> :vsplit<CR>:Explore<CR>
-map Y "+y
 
 " Leader commands
 let mapleader = " "
@@ -83,12 +84,19 @@ map <F1> <Esc>:tabp<CR>
 map <F2> <Esc>:tabn<CR>
 map <F3> <Esc>:windo diffthis<CR>
 map <F4> <Esc>:windo diffoff<CR>
-noremap <F5> @a
-noremap <F8> <Esc>:%!shuf<CR>
+map <F5> @a
+map <F6> :set paste<CR>i
+map <F7> <Esc>:set nopaste<CR>
+map <F9> :vertical resize -20<CR>
+map <F10> :resize -10<CR>
+map <F11> :resize +10<CR>
+map <F12> :vertical resize +20<CR>
+map <S-F9> :vertical resize -2<CR>
+map <S-F10> :resize -1<CR>
+map <S-F11> :resize +1<CR>
+map <S-F12> :vertical resize +2<CR>
 inoremap <F8> TODO: remove this
-noremap <F12> A // JK edit <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
 inoremap <F12> <C-R>=strftime("%m/%d/%Y")<CR>
-noremap <F10> <Esc>:split sent.txt<CR>
 
 " Files based on filename
 au BufNewFile,BufRead Kconfig,Kconfig.debug,*.in setf kconfig
@@ -199,3 +207,6 @@ let &t_ti.="\e[1 q"
 let &t_SI.="\e[5 q"
 let &t_EI.="\e[1 q"
 let &t_te.="\e[0 q"
+
+" Visual mode: map <leader>y to copy selection to Windows clipboard
+xnoremap Y :w !/mnt/c/Windows/System32/clip.exe<CR><CR>
