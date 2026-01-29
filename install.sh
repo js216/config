@@ -9,6 +9,7 @@ ln -i vimrc         ~/.vimrc
 ln -i Xdefaults     ~/.Xdefaults
 ln -i xinitrc       ~/.xinitrc
 ln -i muttrc        ~/.muttrc
+ln -i mailcap       ~/.mailcap
 
 cp -ri mc ~/.config
 cp -ri ncmpcpp ~/.ncmpcpp

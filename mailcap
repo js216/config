@@ -1,0 +1,6 @@
+image/jpeg; feh --scale-down %s
+image/png; feh --scale-down %s
+image/gif; feh --scale-down %s
+image/bmp; feh --scale-down %s
+image/tiff; feh --scale-down %s
+image/webp; feh --scale-down %s
