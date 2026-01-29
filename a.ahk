@@ -7,6 +7,11 @@ $Esc::Capslock
 <#z::Run "C:\Program Files\Google\Chrome\Application\chrome.exe"
 <#m::Run "C:\Users\Jkastelic\Documents\prog\foobar2000\foobar2000.exe"
 
+#2::MsgBox("You pressed Win+2")
+
+; Abbr
+<#^!0::Send '0xc0008000'
+
 ; Special characters
 <#^!Right::Send '→'
 <#^!Left::Send '←'
@@ -44,6 +49,7 @@ $Esc::Capslock
 ^!h::Send 'η'
 ^!r::Send 'ρ'
 ^!z::Send 'ζ'
+^!l::Send 'λ'
 
 ; Press Ctrl+Shift+Alt+V to remove the title bar of the Vim window
 
