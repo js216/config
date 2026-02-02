@@ -70,6 +70,8 @@ static const char *mpdtogglecmd[]  = { "/usr/bin/mpc", "toggle", NULL };
 static const char *audacitycmd[]   = { "audacity", NULL };
 static const char *calccmd[]       = { "st", "-g", "41x24", "orpie", NULL };
 static const char *invertcmd[]     = { "xcalib", "-invert", "-alter", NULL };
+static const char *bpcmd[]         = { "brightnessctl", "set", "400+", NULL };
+static const char *bmcmd[]         = { "brightnessctl", "set", "400-", NULL };
 
 static Key keys[] = {
 	/* modifier            key        function        argument */
@@ -113,8 +115,8 @@ static Key keys[] = {
 	//{ MODKEY,              XK_n,      setlayout,      {.v = &layouts[8]} },
 	{ MODKEY,              XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,              XK_Return, zoom,           {0} },
-	//{ MODKEY,              XK_Down,   moveresize,     {.v = (int []){ 0, 25, 0, 0 }}},
-	//{ MODKEY,              XK_Up,     moveresize,     {.v = (int []){ 0, -25, 0, 0 }}},
+	{ MODKEY,              XK_Down,   spawn,          {.v = bmcmd } },
+	{ MODKEY,              XK_Up,     spawn,          {.v = bpcmd } },
 	{ MODKEY,              XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY,              XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,              XK_period, focusmon,       {.i = +1 } },

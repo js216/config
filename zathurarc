@@ -1,1 +1,2 @@
 set page-cache-size 250
+set guioptions ""
