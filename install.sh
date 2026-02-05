@@ -10,6 +10,7 @@ ln -i Xdefaults     ~/.Xdefaults
 ln -i xinitrc       ~/.xinitrc
 ln -i muttrc        ~/.muttrc
 ln -i mailcap       ~/.mailcap
+ln -i gitconfig     ~/.gitconfig
 
 cp -ri mc ~/.config
 cp -ri ncmpcpp ~/.ncmpcpp

@@ -1,0 +1,12 @@
+[user]
+	email = kastelic.jakob@gmail.com
+	name = Jakob Kastelic
+[init]
+	defaultBranch = main
+[sendemail]
+	smtpServer = smtp.gmail.com
+	smtpServerPort = 587
+	smtpEncryption = tls
+	smtpUser = kastelic.jakob@gmail.com
+[credential]
+	helper = store
