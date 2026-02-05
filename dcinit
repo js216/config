@@ -2,5 +2,5 @@
 10 k
 
 # sum up the whole stack and leave it empty
-[+z1>r]sr
-[lrxpc]sa
+[+z1<r]sr
+[lrxp]sa
