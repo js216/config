@@ -1,2 +1,23 @@
-set spoolfile=""
+set realname = "Jakob Kastelic"
+set from = kastelic.jakob@gmail.com
+
 set folder="~/archive/email"
+set spoolfile="+new"
+set record="+sent"
+set postponed="+postponed"
+set use_from = yes
+set envelope_from ="yes"
+set sendmail="/usr/bin/msmtp"
+set header_cache="~/.cache/mutt"
+set message_cachedir="~/.cache/mutt"
+set alias_file="~/.mail_aliases"
+
+save-hook . 2026
+auto_view text/html
+source ~/.mail_aliases
+
+bind index G last-entry
+bind pager G bottom
+bind browser G last-entry
+
+macro index I "<shell-escape>fetchmail -v<enter>"
