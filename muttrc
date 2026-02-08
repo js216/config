@@ -12,7 +12,7 @@ set header_cache="~/.cache/mutt"
 set message_cachedir="~/.cache/mutt"
 set alias_file="~/.mail_aliases"
 
-save-hook . 2026
+save-hook . =2026
 auto_view text/html
 source ~/.mail_aliases
 

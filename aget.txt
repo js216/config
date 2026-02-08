@@ -11,6 +11,12 @@ dc
 silversearcher-ag
 psmisc
 mutt
+git-email
+msmtp
+fetchmail
+procmail
+sendmail
+irssi
 
 xorg
 chromium
