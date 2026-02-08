@@ -98,6 +98,21 @@ map <S-F12> :vertical resize +2<CR>
 inoremap <F8> TODO: remove this
 inoremap <F12> <C-R>=strftime("%m/%d/%Y")<CR>
 
+" Clipboard
+if has('win32') || has('win64')
+   " Windows
+   vnoremap Y y:call system('clip.exe', @")<CR>
+elseif has('unix')
+   if filereadable('/proc/version') &&
+            \ matchstr(join(readfile('/proc/version')), 'Microsoft') != ''
+      " WSL2
+      vnoremap Y y:call system('/mnt/c/Windows/System32/clip.exe', @")<CR>
+   else
+      " Linux
+      vnoremap Y y:call system('xclip -selection clipboard', @")<CR>
+   endif
+endif
+
 " Files based on filename
 au BufNewFile,BufRead Kconfig,Kconfig.debug,*.in setf kconfig
 au BufRead,BufNewFile *.jlinkscript set filetype=c
@@ -207,6 +222,3 @@ let &t_ti.="\e[1 q"
 let &t_SI.="\e[5 q"
 let &t_EI.="\e[1 q"
 let &t_te.="\e[0 q"
-
-" Visual mode: map <leader>y to copy selection to Windows clipboard
-xnoremap Y :w !/mnt/c/Windows/System32/clip.exe<CR><CR>
