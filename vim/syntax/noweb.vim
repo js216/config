@@ -1,4 +1,4 @@
-execute "runtime! syntax/" . "tex" . ".vim"
+execute "runtime! syntax/" . "typst" . ".vim"
 
 if exists("b:current_syntax")
    unlet b:current_syntax
