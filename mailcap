@@ -4,3 +4,4 @@ image/gif; feh --scale-down %s
 image/bmp; feh --scale-down %s
 image/tiff; feh --scale-down %s
 image/webp; feh --scale-down %s
+application/pdf; zathura %s

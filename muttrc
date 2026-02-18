@@ -19,5 +19,6 @@ source ~/.mail_aliases
 bind index G last-entry
 bind pager G bottom
 bind browser G last-entry
+bind browser g first-entry
 
 macro index I "<shell-escape>fetchmail -v<enter>"

@@ -17,6 +17,9 @@ fetchmail
 procmail
 sendmail
 irssi
+pkg-config
+libgl1-mesa-dev
+libasound2-dev
 
 xorg
 chromium

@@ -28,12 +28,20 @@ alias ognjisce="mplayer -ao jack http://real.ognjisce.si:8000/ognjisce.mp3"
 alias Kindle="jmtpfs /media/kindle && mc ~/books/kindle /media/kindle/Internal\ Storage/documents"
 alias UnKindle="sync && fusermount -u /media/kindle"
 alias ShaMake="find . -type f -print0 | xargs -0 sha256sum"
-alias Tor="cd ~/.prog/tor-browser && ./start-tor-browser.desktop"
+alias Tor="cd ~/projects/prog/tor-browser && ./start-tor-browser.desktop"
 alias ll="ls -lht"
 alias ga="git add . && git status"
 alias gc="git commit"
 alias gs="git status"
+alias Ljubljana='TZ=Europe/Ljubljana date "+%Y-%m-%d %H:%M %Z"'
+alias UTC='TZ=UTC date "+%Y-%m-%d %H:%M %Z"'
 
 function pdf-extract() {
-   gs -sDEVICE=pdfwrite -dNOPAUSE -dBATCH -dSAFER -dFirstPage=$3 -dLastPage=$4 -sOutputFile=$2 $1
+   /usr/bin/gs -sDEVICE=pdfwrite -dNOPAUSE -dBATCH -dSAFER -dFirstPage=$3 -dLastPage=$4 -sOutputFile=$2 $1
 } # usage: pdf-extract input.pdf output.pdf <firstPage> <lastPage>
+
+g() {
+    w3m "https://duckduckgo.com/?q=$(printf '%s\n' "$*" | sed 's/ /+/g')"
+}
+
+. "$HOME/.cargo/env"
