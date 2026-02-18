@@ -5,6 +5,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'mileszs/ack.vim'
+Plugin 'kaarmu/typst.vim'
 call vundle#end()
 filetype plugin indent on
 let g:ackprg = 'ag --nogroup --nocolor --column'
@@ -87,6 +88,7 @@ map <F4> <Esc>:windo diffoff<CR>
 map <F5> @a
 map <F6> :set paste<CR>i
 map <F7> <Esc>:set nopaste<CR>
+map <F8> <Esc>:!make<CR>
 map <F9> :vertical resize -20<CR>
 map <F10> :resize -10<CR>
 map <F11> :resize +10<CR>
