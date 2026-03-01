@@ -133,10 +133,15 @@ let g:netrw_banner = 0
 
 " Visible tabs and trailing spaces
 set list listchars=tab:\|-
+highlight SpecialKey ctermfg=8 guifg=#555555
 highlight WhitespaceEOL ctermbg=red guibg=red
 autocmd FileType * match WhitespaceEOL /\s\+$/
-autocmd BufEnter * highlight OverLength ctermbg=blue guibg=#111111
-autocmd BufEnter * match OverLength /\%82v.*/
+
+" Lines too long
+" " Define highlight once
+highlight OverLength ctermbg=blue guibg=#111111
+autocmd FileType c match OverLength /\%81v.*/
+autocmd FileType rust match OverLength /\%101v.*/
 
 " Custom syntax
 autocmd BufNewFile,BufRead *.nw set syntax=noweb

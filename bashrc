@@ -45,3 +45,4 @@ g() {
 }
 
 . "$HOME/.cargo/env"
+export PATH=/opt/llvm22/bin:$PATH
