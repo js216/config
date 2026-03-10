@@ -46,3 +46,4 @@ g() {
 
 . "$HOME/.cargo/env"
 export PATH=/opt/llvm22/bin:$PATH
+export PATH=~/projects/prog/zig-x86_64-linux-0.16.0-dev.2682+02142a54d:$PATH

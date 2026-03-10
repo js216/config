@@ -142,6 +142,7 @@ autocmd FileType * match WhitespaceEOL /\s\+$/
 highlight OverLength ctermbg=blue guibg=#111111
 autocmd FileType c match OverLength /\%81v.*/
 autocmd FileType rust match OverLength /\%101v.*/
+autocmd FileType mail setlocal tw=72
 
 " Custom syntax
 autocmd BufNewFile,BufRead *.nw set syntax=noweb

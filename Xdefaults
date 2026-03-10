@@ -1,5 +1,6 @@
-*faceName: Dejavu Sans Mono:size=10
-*boldFont: Dejavu Sans Mono:style=Bold:size=10
+#*faceName: Dejavu Sans Mono:size=10
+*faceName: Ac437 IBM VGA 8x16:size=14
 *background:    #000000
 *foreground:    #bbbb99
 XTerm*eightBitInput: false
+XTerm*colorBDMode: true
