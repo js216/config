@@ -111,7 +111,7 @@ elseif has('unix')
       vnoremap Y y:call system('/mnt/c/Windows/System32/clip.exe', @")<CR>
    else
       " Linux
-      vnoremap Y y:call system('xclip -selection clipboard', @")<CR>
+      vnoremap Y y:call system('xclip -selection primary', @")<CR>
    endif
 endif
 
