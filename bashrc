@@ -2,6 +2,14 @@ set -o vi
 export EDITOR=vim
 bind -x '"\C-l": clear'
 
+# ssh agent
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+ssh-add -l &>/dev/null
+if [ $? -eq 2 ]; then
+   rm -f "$SSH_AUTH_SOCK"
+   eval "$(ssh-agent -a "$SSH_AUTH_SOCK" -s)" > /dev/null
+fi
+
 # history
 shopt -s histappend
 PROMPT_COMMAND='history -a'
