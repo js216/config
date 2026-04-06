@@ -1,6 +1,7 @@
 set -o vi
 export EDITOR=vim
 bind -x '"\C-l": clear'
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 # history
 shopt -s histappend
