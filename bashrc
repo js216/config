@@ -2,14 +2,6 @@ set -o vi
 export EDITOR=vim
 bind -x '"\C-l": clear'
 
-# ssh agent
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-ssh-add -l &>/dev/null
-if [ $? -eq 2 ]; then
-   rm -f "$SSH_AUTH_SOCK"
-   eval "$(ssh-agent -a "$SSH_AUTH_SOCK" -s)" > /dev/null
-fi
-
 # history
 shopt -s histappend
 PROMPT_COMMAND='history -a'
@@ -45,14 +37,9 @@ alias Ljubljana='TZ=Europe/Ljubljana date "+%Y-%m-%d %H:%M %Z"'
 alias UTC='TZ=UTC date "+%Y-%m-%d %H:%M %Z"'
 
 function pdf-extract() {
-   /usr/bin/gs -sDEVICE=pdfwrite -dNOPAUSE -dBATCH -dSAFER -dFirstPage=$3 -dLastPage=$4 -sOutputFile=$2 $1
+   /usr/bin/gs -sDEVICE=pdfwrite -dNOPAUSE -dBATCH -dSAFER -dFirstPage="$3" -dLastPage="$4" -sOutputFile="$2" "$1"
 } # usage: pdf-extract input.pdf output.pdf <firstPage> <lastPage>
 
 g() {
-    w3m "https://duckduckgo.com/?q=$(printf '%s\n' "$*" | sed 's/ /+/g')"
+   w3m "https://duckduckgo.com/?q=$(printf '%s\n' "$*" | sed 's/ /+/g')"
 }
-
-. "$HOME/.cargo/env"
-export PATH=/opt/llvm22/bin:$PATH
-export PATH=~/projects/prog/zig-x86_64-linux-0.16.0-dev.2682+02142a54d:$PATH
-export PATH="$HOME/.local/bin:$PATH"
