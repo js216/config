@@ -88,7 +88,7 @@ map <F4> <Esc>:windo diffoff<CR>
 map <F5> @a
 map <F6> :set paste<CR>i
 map <F7> <Esc>:set nopaste<CR>
-map <F8> :set paste<CR>ggdGi
+map <F8> ggdG:set paste<CR>i
 map <F9> :vertical resize -20<CR>
 map <F10> :resize -10<CR>
 map <F11> :resize +10<CR>
@@ -111,7 +111,7 @@ elseif has('unix')
       vnoremap Y y:call system('/mnt/c/Windows/System32/clip.exe', @")<CR>
    else
       " Linux
-      vnoremap Y y:call system('xclip -selection primary', @")<CR>
+      vnoremap <silent> Y y:call system('xclip -selection primary', @")<Bar>call system('xclip -selection clipboard', @")<CR>
    endif
 endif
 
@@ -135,7 +135,7 @@ let g:netrw_banner = 0
 set list listchars=tab:\|-
 highlight SpecialKey ctermfg=8 guifg=#555555
 highlight WhitespaceEOL ctermbg=red guibg=red
-autocmd FileType * match WhitespaceEOL /\s\+$/
+autocmd FileType * 2match WhitespaceEOL /\s\+$/
 
 " Lines too long
 " " Define highlight once
