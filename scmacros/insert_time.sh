@@ -11,12 +11,6 @@ col_to_letters() {
     echo "$result"
 }
 
-# move right
-echo right
-
-# move up
-echo up
-
 # get the column of current cell and convert to letter (0 -> A, ...)
 echo eval @mycol
 read COL
@@ -26,15 +20,11 @@ COL_LETTER=$(col_to_letters "$COL")
 echo eval @myrow
 read ROW
 
-# copy trick: erase and pull
-echo erase $COL_LETTER$ROW
-echo pull
+# get current time as H:MM or HH:MM (24h, no leading zero on hours)
+NOW=$(date +"%-H:%M")
 
-# come back down
-echo down
+# insert as a centered label string
+echo label $COL_LETTER$ROW = \"$NOW\"
 
-# pull the value here also
-echo pull
-
-# move cursor once cell right
-echo right
+# move cursor once cell left
+echo left

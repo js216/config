@@ -11,12 +11,6 @@ col_to_letters() {
     echo "$result"
 }
 
-# move right
-echo right
-
-# move up
-echo up
-
 # get the column of current cell and convert to letter (0 -> A, ...)
 echo eval @mycol
 read COL
@@ -26,15 +20,14 @@ COL_LETTER=$(col_to_letters "$COL")
 echo eval @myrow
 read ROW
 
-# copy trick: erase and pull
-echo erase $COL_LETTER$ROW
-echo pull
+# get today's date components
+read YEAR MONTH DAY < <(date +"%Y %-m %-d")
 
-# come back down
-echo down
+# insert into current cell as an @dts date value
+echo let $COL_LETTER$ROW = @dts\($YEAR,$MONTH,$DAY\)
 
-# pull the value here also
-echo pull
+# apply date display format
+#printf 'fmt %s "\004%%m/%%d/%%y"\n' "$COL_LETTER$ROW"
 
 # move cursor once cell right
 echo right

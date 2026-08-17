@@ -81,8 +81,7 @@ map <leader>d <Esc>:bd<CR>
 map <leader>q <Esc>:q<CR>
 
 " Function keys
-map <F1> <Esc>:tabp<CR>
-map <F2> <Esc>:tabn<CR>
+map <F2> vt,Y
 map <F3> <Esc>:windo diffthis<CR>
 map <F4> <Esc>:windo diffoff<CR>
 map <F5> @a
