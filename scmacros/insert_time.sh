@@ -26,5 +26,5 @@ NOW=$(date +"%-H:%M")
 # insert as a centered label string
 echo label $COL_LETTER$ROW = \"$NOW\"
 
-# move cursor once cell left
-echo left
+# move cursor once cell right
+echo right
