@@ -26,7 +26,8 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact      = 0.618; /* factor of master area size [0.05..0.95] */
+static const float mfact      = 0.618; /* factor of left/right area size [0.05..0.95] */
+static const float hfact      = 0.500; /* factor of top/bottom area size [0.05..0.95] */
 static const int nmaster      = 1;    /* number of clients in master area */
 static const Bool resizehints = False; /* True means respect size hints in tiled resizals */
 
@@ -35,6 +36,7 @@ static const Layout layouts[] = {
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+	{ "###",      horizgrid },
 };
 
 /* key definitions */
@@ -88,7 +90,7 @@ static Key keys[] = {
 	{ MODKEY,              XK_F2,     spawn,          {.v = russian } },
 	{ MODKEY,              XK_F3,     spawn,          {.v = greek } },
 	{ MODKEY,              XK_F4,     spawn,          {.v = english } },
-	{ MODKEY,              XK_q,      spawn,          {.v = nullcmd } },
+	{ MODKEY,              XK_q,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,              XK_w,      spawn,          {.v = nullcmd } },
 	{ MODKEY,              XK_e,      spawn,          {.v = nullcmd } },
 	{ MODKEY,              XK_r,      spawn,          {.v = nullcmd } },
@@ -102,11 +104,12 @@ static Key keys[] = {
 	{ MODKEY,              XK_s,      spawn,          {.v = nullcmd } },
 	{ MODKEY,              XK_d,      spawn,          {.v = nullcmd } },
 	{ MODKEY,              XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,              XK_g,      spawn,          {.v = nullcmd } },
+	{ MODKEY,              XK_g,      sethfact,       {.f = -0.05} },
 	{ MODKEY,              XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,              XK_j,      view,           {0} },
 	{ MODKEY,              XK_k,      spawn,          {.v = kcmd } },
 	{ MODKEY,              XK_l,      setmfact,       {.f = +0.05} },
+	{ MODKEY,              XK_semicolon,      sethfact,       {.f = +0.05} },
 	{ MODKEY,              XK_z,      spawn,          {.v = chromiumcmd } },
 	{ MODKEY,              XK_x,      spawn,          {.v = nullcmd } },
 	{ MODKEY,              XK_c,      spawn,          {.v = calccmd } },

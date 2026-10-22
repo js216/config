@@ -127,6 +127,7 @@ typedef struct {
 struct Monitor {
 	char ltsymbol[16];
 	float mfact;
+	float hfact;
 	int nmaster;
 	int num;
 	int by;               /* bar geometry */
@@ -192,6 +193,7 @@ static long getstate(Window w);
 static Bool gettextprop(Window w, Atom atom, char *text, unsigned int size);
 static void grabbuttons(Client *c, Bool focused);
 static void grabkeys(void);
+static void horizgrid(Monitor *m);
 static void incnmaster(const Arg *arg);
 static void initfont(const char *fontstr);
 static void keypress(XEvent *e);
@@ -219,6 +221,7 @@ static void setclientstate(Client *c, long state);
 static void setfocus(Client *c);
 static void setfullscreen(Client *c, Bool fullscreen);
 static void setlayout(const Arg *arg);
+static void sethfact(const Arg *arg);
 static void setmfact(const Arg *arg);
 static void setup(void);
 static void showhide(Client *c);
@@ -651,6 +654,7 @@ createmon(void) {
 		die("fatal: could not malloc() %u bytes\n", sizeof(Monitor));
 	m->tagset[0] = m->tagset[1] = 1;
 	m->mfact = mfact;
+	m->hfact = hfact;
 	m->nmaster = nmaster;
 	m->showbar = showbar;
 	m->topbar = topbar;
@@ -1023,6 +1027,65 @@ grabkeys(void) {
 				for(j = 0; j < LENGTH(modifiers); j++)
 					XGrabKey(dpy, code, keys[i].mod | modifiers[j], root,
 						 True, GrabModeAsync, GrabModeAsync);
+	}
+}
+
+void
+horizgrid(Monitor *m) {
+	Client *c;
+	unsigned int n, i;
+	int h, x, x2, y, y2;
+	unsigned int ntop, nbottom, j, cols;
+
+	for(n = 0, c = nexttiled(m->clients); c;
+	    c = nexttiled(c->next), n++);
+	if(n == 0)
+		return;
+
+	if(n == 1) {
+		c = nexttiled(m->clients);
+		resize(c, m->wx, m->wy,
+		    m->ww - 2*c->bw,
+		    m->wh - 2*c->bw, False);
+		return;
+	}
+
+	ntop = n / 2;
+	nbottom = n - ntop;
+	h = m->wh * m->hfact;
+
+	for(i = 0, c = nexttiled(m->clients); c;
+	    c = nexttiled(c->next), i++) {
+		if(i < ntop) {
+			j = i;
+			cols = ntop;
+			y = m->wy;
+			y2 = m->wy + h;
+		} else {
+			j = i - ntop;
+			cols = nbottom;
+			y = m->wy + h;
+			y2 = m->wy + m->wh;
+		}
+
+		if(cols == 1) {
+			x = m->wx;
+			x2 = m->wx + m->ww;
+		} else if(j == 0) {
+			x = m->wx;
+			x2 = m->wx + m->ww * m->mfact;
+		} else {
+			x = m->wx + m->ww * m->mfact
+			    + (j - 1) * (m->ww * (1.0 - m->mfact))
+			    / (cols - 1);
+			x2 = m->wx + m->ww * m->mfact
+			     + j * (m->ww * (1.0 - m->mfact))
+			     / (cols - 1);
+		}
+
+		resize(c, x, y,
+		    x2 - x - 2*c->bw,
+		    y2 - y - 2*c->bw, False);
 	}
 }
 
@@ -1566,6 +1629,19 @@ setlayout(const Arg *arg) {
 		drawbar(selmon);
 }
 
+void
+sethfact(const Arg *arg) {
+	float f;
+
+	if(!arg || !selmon->lt[selmon->sellt]->arrange)
+		return;
+	f = arg->f < 1.0 ? arg->f + selmon->hfact : arg->f - 1.0;
+	if(f < 0.1 || f > 0.9)
+		return;
+	selmon->hfact = f;
+	arrange(selmon);
+}
+
 /* arg > 1.0 will set mfact absolutly */
 void
 setmfact(const Arg *arg) {
@@ -1703,28 +1779,58 @@ textnw(const char *text, unsigned int len) {
 
 void
 tile(Monitor *m) {
-	unsigned int i, n, h, mw, my, ty;
+	unsigned int i, n, mw;
+	unsigned int nmaster, nstack;
+	int h, y, split;
 	Client *c;
 
-	for(n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
+	for(n = 0, c = nexttiled(m->clients); c;
+	    c = nexttiled(c->next), n++);
 	if(n == 0)
 		return;
 
-	if(n > m->nmaster)
-		mw = m->nmaster ? m->ww * m->mfact : 0;
-	else
-		mw = m->ww;
-	for(i = my = ty = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
-		if(i < m->nmaster) {
-			h = (m->wh - my) / (MIN(n, m->nmaster) - i);
-			resize(c, m->wx, m->wy + my, mw - (2*c->bw), h - (2*c->bw), False);
-			my += HEIGHT(c);
+	nmaster = MIN(n, m->nmaster);
+	nstack = n - nmaster;
+
+	mw = nstack ? m->ww * m->mfact : m->ww;
+
+	/* Master column */
+	for(i = 0, y = 0, c = nexttiled(m->clients);
+	    c && i < nmaster;
+	    c = nexttiled(c->next), i++) {
+		if(nmaster == 1)
+			h = m->wh;
+		else if(i == 0) {
+			split = m->wh * m->hfact;
+			h = split;
+		} else {
+			h = (m->wh - (int)(m->wh * m->hfact))
+			    / (nmaster - 1);
 		}
-		else {
-			h = (m->wh - ty) / (n - i);
-			resize(c, m->wx + mw, m->wy + ty, m->ww - mw - (2*c->bw), h - (2*c->bw), False);
-			ty += HEIGHT(c);
+
+		resize(c, m->wx, m->wy + y,
+		    mw - 2*c->bw, h - 2*c->bw, False);
+		y += h;
+	}
+
+	/* Stack column */
+	for(i = 0, y = 0; c;
+	    c = nexttiled(c->next), i++) {
+		if(nstack == 1)
+			h = m->wh;
+		else if(i == 0) {
+			split = m->wh * m->hfact;
+			h = split;
+		} else {
+			h = (m->wh - (int)(m->wh * m->hfact))
+			    / (nstack - 1);
 		}
+
+		resize(c, m->wx + mw, m->wy + y,
+		    m->ww - mw - 2*c->bw,
+		    h - 2*c->bw, False);
+		y += h;
+	}
 }
 
 void
