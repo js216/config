@@ -59,12 +59,12 @@ static const char *slovene[]       = { "/home/jk/projects/config/prog/keyboard.s
 static const char *russian[]       = { "/home/jk/projects/config/prog/keyboard.sh", "ru", NULL };
 static const char *greek[]         = { "/home/jk/projects/config/prog/keyboard.sh", "gr", NULL };
 static const char *english[]       = { "/home/jk/projects/config/prog/keyboard.sh", "us", NULL };
-static const char *chromiumcmd[]   = { "/usr/bin/chromium", "--alsa-fixed-output-device=pulse", NULL };
+static const char *chromiumcmd[]   = { "/usr/bin/google-chrome", NULL };
 static const char *nullcmd[]       = { NULL };
 static const char *vup[]           = { "amixer", "--", "set", "Master", "1%+", NULL };
 static const char *vdown[]         = { "amixer", "--", "set", "Master", "1%-", NULL };
 static const char *mute[]          = { "amixer", "--", "set", "Master", "toggle", NULL };
-static const char *sscmd[]         = { "sh", "/home/jk/projects/prog/ss.sh", NULL };
+static const char *sscmd[]         = { "sh", "/home/jk/personal/config/ss.sh", NULL };
 static const char *kcmd[]          = { "sh", "/home/jk/projects/prog/k.sh", NULL };
 static const char *mpdtogglecmd[]  = { "/usr/bin/mpc", "toggle", NULL };
 static const char *audacitycmd[]   = { "audacity", NULL };

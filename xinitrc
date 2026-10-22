@@ -3,8 +3,13 @@
 # ~/.xinitrc
 #
 
+# export X session env to systemd --user and D-Bus, so activated services
+# (notably xdg-desktop-portal-gtk, which Flatpak apps use for file dialogs)
+# have a display to draw on
+dbus-update-activation-environment --systemd DISPLAY XAUTHORITY
+
 # set desktop background
-/usr/bin/feh --bg-fill /home/jk/slike/1418047280-bg.jpg
+/usr/bin/feh --bg-fill /home/jk/personal/1418047280-bg.jpg
 
 # status bar for dwm
 while true; do
