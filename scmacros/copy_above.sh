@@ -12,7 +12,7 @@ col_to_letters() {
 }
 
 # move right
-echo mright
+echo right
 
 # move up
 echo up
@@ -37,4 +37,4 @@ echo down
 echo pull
 
 # move cursor once cell right
-echo mright
+echo right

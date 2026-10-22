@@ -4,6 +4,7 @@ import sys
 import string
 import time
 import datetime
+import csv
 
 if len(sys.argv) < 2:
     print("Usage: %s infile [outfile] [delimiter_char]" % sys.argv[0])
@@ -36,8 +37,9 @@ letters = [
 
 text = ["# Produced by convert_csv_to_sc.py" ]
 
-for row,line in enumerate(infile.readlines()):
-    allp = line.rstrip().split(delimiter)
+reader = csv.reader(infile, delimiter=delimiter, quotechar='"')
+
+for row,allp in enumerate(reader):
     if len(allp) > len(letters):
         print(f"i'm too simple to handle more than {len(letters)} columns")
         sys.exit(2)
@@ -52,6 +54,10 @@ for row,line in enumerate(infile.readlines()):
         try:
             if p.count('/') == 2:
                 date = datetime.datetime.strptime(p, "%m/%d/%Y")
+                text.append('let %s%d = @dts(%d,%d,%d)' % (col, row, date.year, date.month, date.day))
+                continue;
+            if p.count('-') == 2 and len(p) == 10:
+                date = datetime.datetime.strptime(p, "%Y-%m-%d")
                 text.append('let %s%d = @dts(%d,%d,%d)' % (col, row, date.year, date.month, date.day))
                 continue;
         except:

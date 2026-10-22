@@ -30,4 +30,4 @@ if [[ $VAL =~ [0-9] ]]; then
 fi
 
 # move cursor once cell right
-echo mright
+echo right
